@@ -3,18 +3,32 @@ import React, { useEffect, useState } from "react";
 import './App.css'
 import Tmdb from "./Tmdb";
 import MovieRow from "./components/MovieRow";
+import FeatureMovie from "./components/FeatureMovie";
 
 export default () => {
 
   //Lista para ser exibida
   const [movieList, setMovieList] = useState([])
+  //Lista em destaque
+  const [featuredData, setFeaturedData] = useState([0])
 
   useEffect(() => {
     const loadAll = async () => {
       //Pegando a lista Total
       let list = await Tmdb.getHomeList();
       setMovieList(list);
-      console.log(list)
+      //console.log(list)
+      
+      //Pegar o filme em destaque (pegando o feature) 
+      // Destaque - Pegando aleatoriamente da lista dos originais da netflix
+      let originals = list.filter(i=>i.slug==='originals');
+      let randomChosen = Math.floor(Math.random() * (originals[0].items.results.length - 1));
+      let chosen = originals[0].items.results[randomChosen];
+      let chosenInfo = await Tmdb.getMovieInfo(chosen.id, 'tv');
+
+      setFeaturedData(chosenInfo);
+
+      console.log('AQUIIII', chosenInfo)
     }
 
     loadAll();
@@ -22,6 +36,9 @@ export default () => {
 
   return(
     <div className="page">
+
+      <FeatureMovie item={featuredData} />
+
       <section className="lists">
         {movieList.map((item, key) => (
           <MovieRow 
