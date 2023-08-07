@@ -4,13 +4,18 @@ import './App.css'
 import Tmdb from "./Tmdb";
 import MovieRow from "./components/MovieRow";
 import FeatureMovie from "./components/FeatureMovie";
+import Header from "./components/Header";
 
 export default () => {
 
   //Lista para ser exibida
   const [movieList, setMovieList] = useState([])
+
   //Lista em destaque
   const [featuredData, setFeaturedData] = useState([0])
+
+  //Aparecer ou não o background black ou não 
+  const [blackHeader, setBlackHeader] = useState(false)
 
   useEffect(() => {
     const loadAll = async () => {
@@ -34,8 +39,31 @@ export default () => {
     loadAll();
   }, []);
 
+  //Evento de monitoramento da própria página
+  useEffect(() => {
+
+    //monitorar o scroll da tela. E quando estiver acima de alguma valor que eu queira, o blackHeader será setado como true
+    const scrollListener = () => {
+      if(window.scrollY > 10){
+        setBlackHeader(true)
+      }else {
+        setBlackHeader(false)
+      }
+    }
+
+    //quando a tela tiver qualquer scroll, ele vai rodar a função scrollListener
+    window.addEventListener('scroll', scrollListener);
+
+    //remover o evento quando sair da página
+    return () => {
+      window.removeEventListener('scroll', scrollListener)
+    }
+  }, [])
+
   return(
     <div className="page">
+
+      <Header black={blackHeader} />
 
       <FeatureMovie item={featuredData} />
 
