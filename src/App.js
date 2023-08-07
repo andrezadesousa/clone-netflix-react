@@ -86,6 +86,13 @@ export default () => {
           Direitors de imagem para NetFlix <br/>
           Dados pegos do site Themoviedb.org
       </footer>
+
+      {movieList.length <= 0 &&
+      //Só pode aparecer quando lists não tiver nada
+        <div className="loading">
+          <img alt="Carregando" src="https://media.wired.com/photos/592744d3f3e2356fd800bf00/master/w_960,c_limit/Netflix_LoadTime.gif"></img>
+        </div>
+      }
     </div>
   )
 };

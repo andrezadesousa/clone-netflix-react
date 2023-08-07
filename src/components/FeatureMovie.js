@@ -12,6 +12,17 @@ export default ({ item }) => {
         genres.push(item.genres[i].name);
     }
 
+    /*let description = item.overview;
+
+    if (description.length > 200) {
+      description = description.substring(0, 200)+"...";
+    }*/
+
+    let votes = [item.vote_average]
+    let vote = votes.slice(0)
+    console.log('VOTEE', vote)
+
+
   return (
     <section
       className="featured"
@@ -29,7 +40,7 @@ export default ({ item }) => {
 
             <div className="featured--info">
                 <div className="featured--points">
-                    {item.vote_average} pontos
+                    {votes} pontos
                 </div>
                 <div className="featured--year">
                     {firstDate.getFullYear()}
