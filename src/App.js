@@ -75,6 +75,17 @@ export default () => {
             items={item.items} />
         ))}
       </section>
+
+      <footer>
+        Feito com 
+        <span 
+          role="img" 
+          aria-label="coração">
+            🧡
+          </span> pela B7Web <br/>
+          Direitors de imagem para NetFlix <br/>
+          Dados pegos do site Themoviedb.org
+      </footer>
     </div>
   )
 };
